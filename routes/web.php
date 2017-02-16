@@ -23,6 +23,4 @@ Route::get('/news', function () {
     return view('news');
 });
 
-Route::get('/search', function () {
-    return view('search');
-});
+Route::get( '/list', 'ListController@index');

@@ -77,7 +77,6 @@
             }
         </style>
         <link rel='stylesheet' type='text/css' media='all' href='{{ asset('css/bootstrap.min.css') }}' />
-        @yield('page_css')
     </head>
 
     <body>

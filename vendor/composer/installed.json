@@ -1725,17 +1725,17 @@
     },
     {
         "name": "laravel/framework",
-        "version": "v5.4.11",
-        "version_normalized": "5.4.11.0",
+        "version": "v5.4.12",
+        "version_normalized": "5.4.12.0",
         "source": {
             "type": "git",
             "url": "https://github.com/laravel/framework.git",
-            "reference": "9cee8db07cfac13a3a49d17388c9ced4c52e17ac"
+            "reference": "707f32d32dce58232f7a860e0a1d62caf6f9dbfc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/laravel/framework/zipball/9cee8db07cfac13a3a49d17388c9ced4c52e17ac",
-            "reference": "9cee8db07cfac13a3a49d17388c9ced4c52e17ac",
+            "url": "https://api.github.com/repos/laravel/framework/zipball/707f32d32dce58232f7a860e0a1d62caf6f9dbfc",
+            "reference": "707f32d32dce58232f7a860e0a1d62caf6f9dbfc",
             "shasum": ""
         },
         "require": {
@@ -1820,7 +1820,7 @@
             "symfony/dom-crawler": "Required to use most of the crawler integration testing tools (~3.2).",
             "symfony/psr-http-message-bridge": "Required to psr7 bridging features (0.2.*)."
         },
-        "time": "2017-02-10 19:40:54",
+        "time": "2017-02-15 14:31:32",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2838,6 +2838,58 @@
         "homepage": "https://github.com/FriendsOfPHP/Goutte",
         "keywords": [
             "scraper"
+        ]
+    },
+    {
+        "name": "predis/predis",
+        "version": "v1.1.x-dev",
+        "version_normalized": "1.1.9999999.9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/nrk/predis.git",
+            "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/nrk/predis/zipball/98ec0cc27efc1efab32b369962f97e29ecc0464a",
+            "reference": "98ec0cc27efc1efab32b369962f97e29ecc0464a",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.8"
+        },
+        "suggest": {
+            "ext-curl": "Allows access to Webdis when paired with phpiredis",
+            "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+        },
+        "time": "2016-11-22 14:32:30",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Predis\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Daniele Alessandri",
+                "email": "suppakilla@gmail.com",
+                "homepage": "http://clorophilla.net"
+            }
+        ],
+        "description": "Flexible and feature-complete Redis client for PHP and HHVM",
+        "homepage": "http://github.com/nrk/predis",
+        "keywords": [
+            "nosql",
+            "predis",
+            "redis"
         ]
     },
     {

@@ -12,7 +12,7 @@
 			<a href="{{ url('/docs') }}">Documentation</a>
 			<a href="{{ url('/news') }}">News</a>
 			<a href="https://github.com/linxy49/jkkcrawler">GitHub</a>
-			<a href="{{ url('/search') }}">Search</a>
+			<a href="{{ url('/list') }}">List</a>
 		</div>
 	</div>
 </div>
