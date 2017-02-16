@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 });
 
@@ -23,4 +23,4 @@ Route::get('/news', function () {
     return view('news');
 });
 
-Route::get( '/list', 'ListController@index');
+Route::get( '/', 'ListController@index');
