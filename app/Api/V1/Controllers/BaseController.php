@@ -8,5 +8,13 @@ use Dingo\Api\Routing\Helpers;
 class BaseController extends Controller {
 
 	use Helpers;
-	
+	/**
+	 * building list.
+	 *
+	 * @param Request $request
+	 */
+	public function info() {
+		echo "version : 1.0";
+	}
+
 }

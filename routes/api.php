@@ -20,6 +20,7 @@ $api->version ( 'v1', [
 		'namespace' => 'App\Api\V1\Controllers'
 ], function ($api) {
 	$api->group ( ['middleware' => ['api'], 'prefix' => 'v1'], function ($api) {
-		$api->get ( 'list', 'ListController@index' );
+		$api->get ( '/', 'BaseController@info' );
+		$api->get ( '/list', 'ListController@index' );
   } );
 } );
