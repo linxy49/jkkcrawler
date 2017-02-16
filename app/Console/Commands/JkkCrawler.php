@@ -182,11 +182,15 @@ class JkkCrawler extends Command
 
 		// 差分を取得する
 		if (!empty($get)) {
-			$this->diff($get, $set);
+			// $this->diff($get, $set);
 		}
 
 		// データを保存する
 		Redis::set ( "jkk", json_encode($set) );
+
+		$carbon = Carbon::now();
+		$carbon->setToStringFormat('Y/m/d H:i:s');
+		Redis::set ( "updated_at",  $carbon);
 
 		Log::info('jkkcrawler end.');
     }
