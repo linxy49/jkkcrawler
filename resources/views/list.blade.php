@@ -7,7 +7,7 @@
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
-				<th colspan="6">Updated_at&nbsp;:&nbsp;{{$updated_at}}&nbsp;5分間隔</th>
+				<th colspan="6">Updated_at&nbsp;:&nbsp;{{$updated_at}}</th>
 			</tr>
 			<tr>
 				<th>市区部</th><th>住宅名</th><th>間取り</th><th>床面積[m2]</th><th>家賃[円]</th><th>共益費[円]</th><th>募集戸数</th>
