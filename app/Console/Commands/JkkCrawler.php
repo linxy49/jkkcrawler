@@ -232,21 +232,23 @@ class JkkCrawler extends Command
                 $count = preg_replace('/[^0-9]/', '', $node->text());
             });
 
+
+			$sikubu['key'] = $key;
+			$sikubu['value'] = $value;
+
             if (10 < $count) {
                 // Log::debug($value . "：[" . $count . "]");
                 // 10件以外場合,間取り条件で再検索する
-                $sikubu['key'] = $key;
-                $sikubu['value'] = $value;
-                $this->rearchByMadori($client, JkkCrawler::MADORI, $key, $sikubu);
+                $this->rearchByMadori($client, JkkCrawler::MADORI, $sikubu);
             } else {
                 if (0 == $count) {
                     if (strpos($crawler->text(), "mousikomi") !== false) {
-                        $this->getBuildingOnlyOne($crawler);
+                        $this->getBuildingOnlyOne($crawler, $sikubu);
                         // １件のみ場合、詳細画面を取得する。
                         $count++;
                     }
                 } else {
-                    $this->getBuilding($crawler);
+                    $this->getBuilding($crawler, $sikubu);
                 }
                 // Log::debug($value . "：[" . $count . "]");
             }
@@ -281,12 +283,12 @@ class JkkCrawler extends Command
             } else {
                 if (0 == $count) {
                     if (strpos($crawler->text(), "mousikomi") !== false) {
-                        $this->getBuildingOnlyOne($crawler);
+                        $this->getBuildingOnlyOne($crawler, $sikubu);
                         // １件のみ場合、詳細画面を取得する。
                         $count++;
                     }
                 } else {
-                    $this->getBuilding($crawler);
+                    $this->getBuilding($crawler, $sikubu);
                 }
                 // Log::debug($value . "：[" . $count . "]");
             }
@@ -318,7 +320,7 @@ class JkkCrawler extends Command
             } else {
                 if (0 == $count) {
                     if (strpos($crawler->text(), "mousikomi") !== false) {
-                        $this->getBuildingOnlyOne($crawler);
+                        $this->getBuildingOnlyOne($crawler, $sikubu);
                         // １件のみ場合、詳細画面を取得する。
                         $count++;
                     }
@@ -330,8 +332,8 @@ class JkkCrawler extends Command
     }
 
 
-    function getBuilding($crawler) {
-        $crawler->filter('tr.ListTXT1')->each(function($node) {
+    function getBuilding($crawler, $sikubu) {
+        $crawler->filter('tr.ListTXT1')->each(function($node) use ($sikubu) {
             $name = $this->format($node->filter('td.ListTXT1')->eq(1)->text());
             $madori = $this->format($node->filter('td.ListTXT1')->eq(5)->text());
             $yukamenseki = $this->format($node->filter('td.ListTXT1')->eq(6)->text());
@@ -340,6 +342,7 @@ class JkkCrawler extends Command
             $kosu = $this->format($node->filter('td.ListTXT1')->eq(9)->text());
 
             $this->result[] = array (
+				"sikubu" => $sikubu['value'],
                 "name" => $name,
                 "madori" => $madori,
                 "yukamenseki" => $yukamenseki,
@@ -350,7 +353,7 @@ class JkkCrawler extends Command
             // Log::debug("[" . $name . "-" . $madori . "-" . $yukamenseki . "-" . $yachin . "-" . $kyoekihi . "-" . $kosu . "]");
         });
 
-        $crawler->filter('tr.ListTXT2')->each(function($node) {
+        $crawler->filter('tr.ListTXT2')->each(function($node) use ($sikubu) {
             $name = $this->format($node->filter('td.ListTXT2')->eq(1)->text());
             $madori = $this->format($node->filter('td.ListTXT2')->eq(5)->text());
             $yukamenseki = $this->format($node->filter('td.ListTXT2')->eq(6)->text());
@@ -359,6 +362,7 @@ class JkkCrawler extends Command
             $kosu = $this->format($node->filter('td.ListTXT2')->eq(9)->text());
 
             $this->result[] = array (
+				"sikubu" => $sikubu['value'],
                 "name" => $name,
                 "madori" => $madori,
                 "yukamenseki" => $yukamenseki,
@@ -370,7 +374,7 @@ class JkkCrawler extends Command
         });
     }
 
-    function getBuildingOnlyOne($crawler) {
+    function getBuildingOnlyOne($crawler, $sikubu) {
         // Log::debug("getBuildingOnlyOne start.");
         $name = $this->format($crawler->filter('td.Data_cell')->eq(2)->text());
         $madori = $this->format($crawler->filter('td.ListTXT1')->eq(4)->text());
@@ -380,6 +384,7 @@ class JkkCrawler extends Command
         $kosu = "1";
 
         $this->result[] = array (
+			"sikubu" => $sikubu['value'],
             "name" => $name,
             "madori" => $madori,
             "yukamenseki" => $yukamenseki,
