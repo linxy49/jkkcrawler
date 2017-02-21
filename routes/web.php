@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 });
 
@@ -19,8 +19,6 @@ Route::get('/docs', function () {
     return view('docs');
 });
 
-Route::get('/news', function () {
-    return view('news');
-});
+Route::get( '/news', 'NewsController@index');
 
-Route::get( '/', 'ListController@index');
+Route::get( '/list', 'ListController@index');
