@@ -169,9 +169,6 @@ class JkkCrawler extends Command
         $forwardForm = $crawler->filter('form')->form();
         $crawler = $client->submit($forwardForm);
 
-		$carbon = Carbon::now();
-		$carbon->setToStringFormat('Y/m/d H:i:s');
-
         // 区部を検索する
         $this->search($client, JkkCrawler::KU);
 
@@ -187,15 +184,11 @@ class JkkCrawler extends Command
 		if (!empty($get)) {
 			$diff = $this->diff($get, $set);
 			$recent = json_decode(Redis::get ( "recent" ));
-
 			Log::info($recent);
 
 			if (0 < count($diff)) {
-
 				Log::info($diff);
-
 				foreach($diff as $data) {
-					$data['updated_at'] = $carbon;
 					$recent[] = $data;
 				}
 			}
@@ -205,8 +198,8 @@ class JkkCrawler extends Command
 		// データを保存する
 		Redis::set ( "jkk", json_encode($set) );
 
-
-		Redis::set ( "updated_at",  $carbon);
+		$now = date('Y/m/d H:i:s');
+		Redis::set ( "updated_at",  $now);
 
 		Log::info('jkkcrawler end.');
     }
@@ -415,6 +408,8 @@ class JkkCrawler extends Command
 	function diff ($old, $new) {
 		Log::debug("diff start.");
 
+		$now = date('Y/m/d H:i:s');
+
 		$diff = array();
 		foreach($old as $v1) {
 			$delFlag = true;
@@ -439,6 +434,7 @@ class JkkCrawler extends Command
 				$array['yachin'] = $v1->yachin;
 				$array['kyoekihi'] = $v1->kyoekihi;
 				$array['kosu'] = "-".$v1->kosu;
+				$array['updated_at'] = $now;
 				$diff[] = $array;
 			}
 		}
@@ -455,6 +451,7 @@ class JkkCrawler extends Command
 						if ($v2['kosu'] != $v1->kosu) {
 							$count = strval (intval($v2['kosu']) - intval($v1->kosu));
 							$v2['kosu'] = $count;
+							$v2['updated_at'] = $now;
 							$diff[] = $v2;
 						}
 						$addFlag = false;
@@ -463,6 +460,7 @@ class JkkCrawler extends Command
 			}
 
 			if ($addFlag) {
+				$v2['updated_at'] = $now;
 				$diff[] = $v2;
 			}
 		}
