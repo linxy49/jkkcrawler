@@ -9,9 +9,10 @@
 		</div>
 
 		<div class="links">
+			<a href="{{ url('/all') }}">JKK東京の物件一覧</a>
+			<a href="{{ url('/news') }}">最近の物件更新</a>
+			<a href="{{ url('/list') }}">空室物件・募集中戸数</a>
 			<a href="{{ url('/docs') }}">Documentation</a>
-			<a href="{{ url('/news') }}">News</a>
-			<a href="{{ url('/list') }}">List</a>
 		</div>
 	</div>
 </div>

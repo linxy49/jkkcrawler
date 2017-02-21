@@ -21,7 +21,11 @@
 				<td>{{$data->yukamenseki}}</td>
 				<td>{{$data->yachin}}</td>
 				<td>{{$data->kyoekihi}}</td>
-				<td>{{$data->kosu}}</td>
+				@if (intval($data->kosu) > 0)
+					<td>+{{$data->kosu}}</td>
+				@else
+					<td>{{$data->kosu}}</td>
+				@endif
 				<td>{{$data->updated_at}}</td>
 			</tr>
 			@endforeach
