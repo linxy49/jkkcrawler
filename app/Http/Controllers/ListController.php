@@ -17,6 +17,6 @@ class ListController extends Controller
 	{
 		$list = json_decode(Redis::get ( "jkk" ));
 		$updated_at = Redis::get ( "updated_at" );
-		return view ( 'list', [ 'list' => $list, 'updated_at' => $updated_at ] );
+		return view ( 'list', [ 'list' => array_reverse($list), 'updated_at' => $updated_at ] );
 	}
 }
