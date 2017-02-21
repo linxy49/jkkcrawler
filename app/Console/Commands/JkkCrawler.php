@@ -169,6 +169,9 @@ class JkkCrawler extends Command
         $forwardForm = $crawler->filter('form')->form();
         $crawler = $client->submit($forwardForm);
 
+		$carbon = Carbon::now();
+		$carbon->setToStringFormat('Y/m/d H:i:s');
+
         // 区部を検索する
         $this->search($client, JkkCrawler::KU);
 
@@ -182,14 +185,27 @@ class JkkCrawler extends Command
 
 		// 差分を取得する
 		if (!empty($get)) {
-			// $this->diff($get, $set);
+			$diff = $this->diff($get, $set);
+			$recent = json_decode(Redis::get ( "recent" ));
+
+			Log::info($recent);
+
+			if (0 < count($diff)) {
+
+				Log::info(($diff);
+
+				foreach($diff as $data) {
+					$data['updated_at'] = $carbon;
+					$recent[] = $data;
+				}
+			}
+			Redis::set ( "recent", json_encode($recent) );
 		}
 
 		// データを保存する
 		Redis::set ( "jkk", json_encode($set) );
 
-		$carbon = Carbon::now();
-		$carbon->setToStringFormat('Y/m/d H:i:s');
+
 		Redis::set ( "updated_at",  $carbon);
 
 		Log::info('jkkcrawler end.');
@@ -398,10 +414,61 @@ class JkkCrawler extends Command
 
 	function diff ($old, $new) {
 		Log::debug("diff start.");
-		Log::debug($old);
-		Log::debug("**********");
-		Log::debug($new);
+
+		$diff = array();
+		foreach($old as $v1) {
+			$delFlag = true;
+			foreach($new as $v2) {
+				if (($v1->sikubu == $v2['sikubu'])
+					&& ($v1->name == $v2['name'])
+					&& ($v1->madori == $v2['madori'])
+					&& ($v1->yukamenseki == $v2['yukamenseki'])
+					&& ($v1->yachin == $v2['yachin'])
+					&& ($v1->kyoekihi == $v2['kyoekihi'])) {
+						$delFlag = false;
+						break;
+				}
+			}
+
+			if ($delFlag) {
+				$array = array();
+				$array['sikubu'] = $v1->sikubu;
+				$array['name'] = $v1->name;
+				$array['madori'] = $v1->madori;
+				$array['yukamenseki'] = $v1->yukamenseki;
+				$array['yachin'] = $v1->yachin;
+				$array['kyoekihi'] = $v1->kyoekihi;
+				$array['kosu'] = "-".$v1->kosu;
+				$diff[] = $array;
+			}
+		}
+
+		foreach($new as $v2) {
+			$addFlag = true;
+			foreach($old as $v1) {
+				if ($v2['sikubu'] == $v1->sikubu
+					&& $v2['name'] == $v1->name
+					&& $v2['madori'] == $v1->madori
+					&& $v2['yukamenseki'] == $v1->yukamenseki
+					&& $v2['yachin'] == $v1->yachin
+					&& $v2['kyoekihi'] == $v1->kyoekihi) {
+						if ($v2['kosu'] != $v1->kosu) {
+							$count = strval (intval($v2['kosu']) - intval($v1->kosu));
+							$v2['kosu'] = $count;
+							$diff[] = $v2;
+						}
+						$addFlag = false;
+						break;
+				}
+			}
+
+			if ($addFlag) {
+				$diff[] = $v2;
+			}
+		}
+
 		Log::debug("diff end.");
+		return $diff;
 	}
 
 
