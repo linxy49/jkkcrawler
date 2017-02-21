@@ -22,5 +22,6 @@ $api->version ( 'v1', [
 	$api->group ( ['middleware' => ['api'], 'prefix' => 'v1'], function ($api) {
 		$api->get ( '/', 'BaseController@info' );
 		$api->get ( '/list', 'ListController@index' );
+		$api->get ( '/news', 'NewsController@index' );
   } );
 } );

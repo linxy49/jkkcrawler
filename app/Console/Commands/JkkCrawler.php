@@ -184,10 +184,10 @@ class JkkCrawler extends Command
 		if (!empty($get)) {
 			$diff = $this->diff($get, $set);
 			$recent = json_decode(Redis::get ( "recent" ));
-			Log::info($recent);
+			//Log::info($recent);
 
 			if (0 < count($diff)) {
-				Log::info($diff);
+				//Log::info($diff);
 				foreach($diff as $data) {
 					$recent[] = $data;
 				}
