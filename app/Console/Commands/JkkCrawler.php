@@ -192,7 +192,7 @@ class JkkCrawler extends Command
 
 			if (0 < count($diff)) {
 
-				Log::info(($diff);
+				Log::info($diff);
 
 				foreach($diff as $data) {
 					$data['updated_at'] = $carbon;

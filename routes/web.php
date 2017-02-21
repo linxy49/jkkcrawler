@@ -19,6 +19,7 @@ Route::get('/docs', function () {
     return view('docs');
 });
 
+
 Route::get( '/news', 'NewsController@index');
 
 Route::get( '/list', 'ListController@index');

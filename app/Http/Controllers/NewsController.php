@@ -15,7 +15,10 @@ class NewsController extends Controller
 	 */
 	public function index()
 	{
+		Log::debug("NewsController start.");
 		$recent = json_decode(Redis::get ( "recent" ));
-		return view ( 'news', [ 'recent' => $recent ] );
+		Log::debug($recent);
+		Log::debug("NewsController end.");
+		return view ( 'news', [ 'recent' => [] ] );
 	}
 }
