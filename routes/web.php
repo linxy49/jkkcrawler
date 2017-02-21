@@ -15,11 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/docs', function () {
-    return view('docs');
+Route::get('/all', function () {
+    return view('all');
 });
-
 
 Route::get( '/news', 'NewsController@index');
 
 Route::get( '/list', 'ListController@index');
+
+Route::get('/docs', function () {
+    return view('docs');
+});
