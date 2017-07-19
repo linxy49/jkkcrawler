@@ -26,3 +26,13 @@ Route::get( '/list', 'ListController@index');
 Route::get('/docs', function () {
     return view('docs');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::resource('/user', 'UserController');
+
+Route::resource('/item', 'ItemController');
+
+Route::resource('/area', 'AreaController');
